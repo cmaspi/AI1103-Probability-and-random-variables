@@ -147,9 +147,9 @@ $X$ is almost surely constant random variable, it follows degenrate distribution
 \begin{align}
 \pr{X\neq E\sbrak{X}}&<\delta, \forall \delta>0\\
 E\sbrak{X^{100}}&=\displaystyle\sum_{x}^{}x^{100}p_X(x)\nonumber\\
-&=1^{100}p_X(1)+\sum_{x\neq1}^{}x^{100}p_X(x)
+&=1^{100}\pr{X=1}+\sum_{x\neq1}^{}x^{100}\pr{X=x}
 \end{align}
-We know that $0\le\pr{X\neq1}<\delta$, $p_X(1)=1-\delta$
+We know that $0\le\pr{X\neq1}<\delta$, $\pr{X=1}=1-\delta$
 \begin{align}
 0\le \abs{E\sbrak{X^{100}}-1}\le\displaystyle\sum_{x}^{}x^{100}\delta\\
 \forall \epsilon>0 \exists \delta>0 \ni \displaystyle\abs{E\sbrak{X^{100}}-1}<\epsilon\\
