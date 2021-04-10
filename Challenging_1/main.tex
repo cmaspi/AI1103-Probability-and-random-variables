@@ -145,9 +145,13 @@ Let X be a random variable such that $E(X)=E(X^2)=1$. Then $E(X^{100})=?$
 \end{align}
 $X$ is almost surely constant random variable, it follows degenrate distribution, in mathematical terms
 \begin{align}
-\pr{X\neq E\sbrak{X}}<\delta, \forall \delta>0\\
-E\sbrak{X^{100}}=\displaystyle\sum_{x}^{}x^{100}p_X(x)\\
-1\le E\sbrak{X^{100}}\le 1+\displaystyle\sum_{x}^{}x^{100}\delta\\
+\pr{X\neq E\sbrak{X}}&<\delta, \forall \delta>0\\
+E\sbrak{X^{100}}&=\displaystyle\sum_{x}^{}x^{100}p_X(x)\nonumber\\
+&=1^{100}p_X(1)+\sum_{x\neq1}^{}x^{100}p_X(x)
+\end{align}
+We know that $0\le\pr{X\neq1}<\delta$, $p_X(1)=1-\delta$
+\begin{align}
+0\le \abs{E\sbrak{X^{100}}-1}\le\displaystyle\sum_{x}^{}x^{100}\delta\\
 \forall \epsilon>0 \exists \delta>0 \ni \displaystyle\abs{E\sbrak{X^{100}}-1}<\epsilon\\
 \text{Choose }\delta<\frac{\epsilon}{\displaystyle\sum_x x^{100}}\nonumber\\
 \therefore E\sbrak{X^{100}}=1
