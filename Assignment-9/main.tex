@@ -232,13 +232,15 @@ For correlated random variables $X$ and $Y$ in normal distribution, we have
 a^2+b^2=a^2+b^2+2\rho ab\\
 \therefore \rho=0\label{eq:rho}
 \end{align}
-For standard bivariate normal distribution, with correlation coefficient $\rho$, the joint pdf is given by
+considering the case with $a=1, b=1$, the joint probability distribution is given as
 \begin{align}
-f_{XY}(x,y)=\frac{1}{2\pi\sqrt[2]{1-\rho^2}}e^{\frac{-x^2-2\rho xy-y^2}{2(1-p^2)}}\label{eq:std_bivariate}
+f_Z(x,y)=\frac{\text{exp}\brak{-\frac{1}{2}\brak{z-\mu}^\top\Sigma^{-1}\brak{z-\mu}}}{\sqrt{(2\pi)^2\abs{\Sigma}}}\\
+f_Z(x,y)=\frac{\text{exp}\brak{-\frac{1}{2}\brak{\begin{bmatrix} x &y\end{bmatrix}} I_2\brak{\begin{bmatrix} x &y\end{bmatrix}}^\top}}{\sqrt{(2\pi)^2}}
 \end{align}
-Using \eqref{eq:rho} and \eqref{eq:std_bivariate}
+Where $I_2$ is the identity matrix of order 2
 \begin{align}
-f_{XY}(x,y)=\frac{1}{2\pi}e^{\frac{-x^2-y^2}{2}}=f_X(x)f_Y(y)
+f_Z(x,y)=\frac{\text{exp}\brak{-\frac{1}{2}\brak{\begin{bmatrix} x &y\end{bmatrix}} \brak{\begin{bmatrix} x &y\end{bmatrix}}^\top}}{\sqrt{(2\pi)^2}}\\
+f_Z(x,y)=\frac{\text{exp}\brak{-\frac{1}{2}\brak{x^2+y^2}}}{\sqrt{(2\pi)^2}}=f_X(x)f_Y(y)
 \end{align}
 $\therefore$ \textbf{Option(2) is correct}
 \item
