@@ -28,7 +28,7 @@
 \usepackage[breaklinks=true]{hyperref}
 \usepackage{graphicx}
 \usepackage{tkz-euclide}
-
+\usepackage{stackengine}
 \usetikzlibrary{calc,math}
 \usepackage{listings}
     \usepackage{color}                                            %%
@@ -105,6 +105,7 @@ columns=fullflexible
 \newcommand*{\permcomb}[4][0mu]{{{}^{#3}\mkern#1#2_{#4}}}
 \newcommand*{\perm}[1][-3mu]{\permcomb[#1]{P}}
 \newcommand*{\comb}[1][-1mu]{\permcomb[#1]{C}}
+\newcommand\xrowht[2][0]{\addstackgap[.5\dimexpr#2\relax]{\vphantom{#1}}}
 \providecommand{\dec}[2]{\ensuremath{\overset{#1}{\underset{#2}{\gtrless}}}}
 \newcommand{\myvec}[1]{\ensuremath{\begin{pmatrix}#1\end{pmatrix}}}
 \newcommand{\mydet}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
@@ -146,6 +147,10 @@ Y
 \item $E\sbrak{e^{itX+isY}}=E\sbrak{e^{itX}}E\sbrak{e^{isY}}$ for all real $s$ and $t$
 \end{enumerate}
 \section{solution}
+An important property of dirac delta function that will be used at multiple ocassions in this solution is
+\begin{align}
+\displaystyle\int\limits_{-\infty}^{\infty} f(x)\delta(x-a)dx=f(a) \label{eq:dirac}
+\end{align}
 Given $X\sim N\brak{0,1}, Y\sim N(0,1)$
 \begin{enumerate}
 \item
@@ -155,29 +160,77 @@ E\sbrak{XY}-E\sbrak{X}E\sbrak{Y}=0\\
 E\sbrak{XY}=0\\
 \displaystyle \int\limits_{-\infty}^{\infty} \int\limits_{-\infty}^{\infty}xyf_{XY}(x,y) dxdy=0
 \end{align}
-This doesn't imply independence. Refer \eqref{eq:counter} for counter example.
+This doesn't imply independence. Counter example given below\\
+Lets consider a case where $X$ and $Y$ are dependent based on the following relation
 \begin{align}
-f_{XY}(x,y)=\frac{1}{\pi}e^{-x^2-y^2} \label{eq:counter}
+X=KY \label{eq:case}
+\end{align}
+PMF for $K$ is given as
+\begin{align}
+p_K(k)=
+\begin{cases}
+\frac{1}{2} &k=1\\
+\frac{1}{2} & k=-1\\
+0 & \text{otherwise}
+\end{cases}
+\end{align}
+The joint probability distribution is therefore
+\begin{align}
+f_{XY}(x,y)&=f_{X|Y}(x|y)f_X(x)\nonumber \\
+&=f_X(x)\frac{1}{2}(\delta(x+y)+\delta(x-y))\label{eq:counter}
+\end{align}
+The marginal probability distribution function for $X$ is given as
+\begin{align}
+\int\limits_{-\infty}^{\infty}f_X(x)\frac{1}{2}(\delta(x+y)+\delta(x-y)) dy
+\end{align}
+Using \eqref{eq:dirac}, we get
+\begin{align}
+\int\limits_{-\infty}^{\infty}f_X(x)\frac{1}{2}(\delta(x+y)+\delta(x-y))dy=f_X(x)
+\end{align}
+We know that $X\sim N(0,1)$, $f_X(x)$ represents gaussian probability distribution function.\\
+Futher, using symmetry of \eqref{eq:case}, we can establish that marginal distribution of $Y$ is gaussian
+\begin{align}
+&Cov(X,Y)=E[XY]-E[X]E[Y]=E[XY]\\
+&E[XY]=\int\limits_{-\infty}^{\infty}\int\limits_{-\infty}^{\infty}xyf_{XY}(x,y) dy dx
+\end{align}
+\begin{align}
+=\int\limits_{-\infty}^{\infty}\int\limits_{-\infty}^{\infty}xyf_X(x)\frac{1}{2}(\delta(x+y)+\delta(x-y)) dy dx\\
+=\int\limits_{-\infty}^{\infty} xf_X(x)\int\limits_{-\infty}^{\infty}y\frac{1}{2}(\delta(x+y)+\delta(x-y)) dy dx
+\end{align}
+Using \eqref{eq:dirac}
+\begin{align}
+E[XY]=\int\limits_{-\infty}^{\infty}xf_X(x)\frac{1}{2}(x-x)dx=0
 \end{align}
 \item
+Defining the following matrices/vectors
+\begin{table}[htp]
+\centering
+    \resizebox{0.7\columnwidth}{25mm}{
+\begin{tabular}{ |c|c|c|} 
+\hline
+\textbf{vector/matrix} & \textbf{expression} \\
+\hline\xrowht[()]{15pt}
+$Z$& $\begin{bmatrix} X &Y\end{bmatrix}^\top$\\
+\hline\xrowht[()]{15pt}
+$C$&$\begin{bmatrix} a &b\end{bmatrix}^\top$  \\
+\hline\xrowht[()]{15pt}
+$\mu$&$\begin{bmatrix} 0 &0\end{bmatrix}^\top$  \\
+\hline\xrowht[()]{25pt}
+$\Sigma$&$\begin{bmatrix}a^2&\rho ab\\\rho ab&b^2\end{bmatrix}$ \xrowht[()]{20pt}\\
+\hline
+\end{tabular}}
+\caption{vectors/matrices and their expressions}
+\label{table1}
+\end{table}
+
 \begin{align}
-\begin{bmatrix}
-a&b
-\end{bmatrix}\cdot
-\begin{bmatrix}
-X\\
-Y
-\end{bmatrix}
-\sim N\brak{\begin{bmatrix}0\\0\end{bmatrix},\begin{bmatrix}a^2&\rho ab\\\rho ab&b^2\end{bmatrix}}
+C^\top Z\sim N(\mu,\Sigma)
 \end{align}
 For correlated random variables $X$ and $Y$ in normal distribution, we have
 \begin{align}
-\sigma_{X+Y}^2=\sigma_X^2+\sigma_Y^2+2\rho\sigma_X\sigma_Y
-\end{align}
-Replacing $X$ by $aX$, $Y$ by $bY$, we get
-\begin{align}
-a^2+b^2&=a^2+b^2+2\rho ab\\
-&\therefore \rho=0\label{eq:rho}
+\sigma_{Z}^2=\displaystyle\sum_{i,j}\Sigma_{ij}\\
+a^2+b^2=a^2+b^2+2\rho ab\\
+\therefore \rho=0\label{eq:rho}
 \end{align}
 For standard bivariate normal distribution, with correlation coefficient $\rho$, the joint pdf is given by
 \begin{align}
@@ -189,7 +242,19 @@ f_{XY}(x,y)=\frac{1}{2\pi}e^{\frac{-x^2-y^2}{2}}=f_X(x)f_Y(y)
 \end{align}
 $\therefore$ \textbf{Option(2) is correct}
 \item
-The counter example is \eqref{eq:counter}, using properties of even function it is easy to obtain
+The counter example is \eqref{eq:counter}, the joint probability function is symmetric across all 4 quadrants
+\begin{align}
+\therefore \pr{X\le 0, Y\le0}=\frac{1}{4}
+\end{align}
+Alternatively, here is proof 
+\begin{align}
+\pr{X\le 0}=F_X(0)=\frac{1}{2} \label{eq:pr1}
+\end{align}
+Using \eqref{eq:case}
+\begin{align}
+\pr{Y\le 0|X\le 0}=\frac{1}{2} \label{eq:pr2}
+\end{align}
+Using \eqref{eq:pr1} and \eqref{eq:pr2}
 \begin{align}
 \pr{X\le 0, Y\le0}=\frac{1}{4}
 \end{align}
