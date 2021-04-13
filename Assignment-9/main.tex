@@ -17,7 +17,7 @@
 
 \usepackage{longtable}
 \usepackage{multirow}
-
+\usepackage{float}
 \usepackage{enumitem}
 \usepackage{mathtools}
 \usepackage{steinmetz}
@@ -41,7 +41,7 @@
     \usepackage{lscape}     
 \usepackage{multicol}
 \usepackage{chngcntr}
-
+\usepackage{bm}
 \DeclareMathOperator*{\Res}{Res}
 
 \renewcommand\thesection{\arabic{section}}
@@ -129,7 +129,11 @@ columns=fullflexible
 \bigskip
 \renewcommand{\thefigure}{\theenumi}
 \renewcommand{\thetable}{\theenumi}
-Download all latex-tikz codes from 
+Download all python codes from 
+\begin{lstlisting}
+https://github.com/cmapsi/AI1103-Probability-and-random-variables/tree/main/Assignment-9/codes
+\end{lstlisting}
+and latex-tikz codes from 
 \begin{lstlisting}
 https://github.com/cmapsi/AI1103-Probability-and-random-variables/blob/main/Assignment-9/main.tex
 \end{lstlisting}
@@ -174,6 +178,13 @@ p_K(k)=
 0 & \text{otherwise}
 \end{cases}
 \end{align}
+A simulation is given below, Y is gaussian, then X also follows gaussian
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{figure/fig}
+\caption{X and Y, if Y is normal}
+\label{plot}
+\end{figure}
 The joint probability distribution is therefore
 \begin{align}
 f_{XY}(x,y)&=f_{X|Y}(x|y)f_X(x)\nonumber \\
@@ -210,39 +221,50 @@ Defining the following matrices/vectors
 \hline
 \textbf{vector/matrix} & \textbf{expression} \\
 \hline\xrowht[()]{15pt}
-$Z$& $\begin{bmatrix} X &Y\end{bmatrix}^\top$\\
+$\boldsymbol{Z}$& $\begin{pmatrix} X &Y\end{pmatrix}^\top$\\
 \hline\xrowht[()]{15pt}
-$C$&$\begin{bmatrix} a &b\end{bmatrix}^\top$  \\
+$\boldsymbol{C}$&$\begin{pmatrix} a &b\end{pmatrix}^\top$  \\
 \hline\xrowht[()]{15pt}
-$\mu$&$\begin{bmatrix} 0 &0\end{bmatrix}^\top$  \\
+$\boldsymbol{\mu}$&$\begin{pmatrix} 0 &0\end{pmatrix}^\top$  \\
 \hline\xrowht[()]{25pt}
-$\Sigma$&$\begin{bmatrix}a^2&\rho ab\\\rho ab&b^2\end{bmatrix}$ \xrowht[()]{20pt}\\
+$\boldsymbol{\Sigma}$&$\begin{pmatrix}1&\rho\\\rho&1\end{pmatrix}$ \xrowht[()]{20pt}\\
 \hline
 \end{tabular}}
 \caption{vectors/matrices and their expressions}
 \label{table1}
 \end{table}
-
+Given
 \begin{align}
-C^\top Z\sim N(\mu,\Sigma)
+\boldsymbol{C^\top Z}\sim N\brak{0,a^2+b^2}
 \end{align}
-For correlated random variables $X$ and $Y$ in normal distribution, we have
+Since this is true for all $a$ and $b$, it is equivalent to $X$ and $Y$ being jointly gaussian
+\begin{align}
+\boldsymbol{Z}\sim N(\boldsymbol{\mu},\boldsymbol{\Sigma})
+\end{align}
+For correlated random variables $X$ and $Y$ in bivariate normal distribution, we have
 \begin{align}
 \sigma_{Z}^2=\displaystyle\sum_{i,j}\Sigma_{ij}\\
 a^2+b^2=a^2+b^2+2\rho ab\\
 \therefore \rho=0\label{eq:rho}
 \end{align}
-considering the case with $a=1, b=1$, the joint probability distribution is given as
+The joint distribution is given as
 \begin{align}
-f_Z(x,y)=\frac{\text{exp}\brak{-\frac{1}{2}\brak{z-\mu}^\top\Sigma^{-1}\brak{z-\mu}}}{\sqrt{(2\pi)^2\abs{\Sigma}}}\\
-f_Z(x,y)=\frac{\text{exp}\brak{-\frac{1}{2}\brak{\begin{bmatrix} x &y\end{bmatrix}} I_2\brak{\begin{bmatrix} x &y\end{bmatrix}}^\top}}{\sqrt{(2\pi)^2}}
+f_Z(x,y)=\frac{\text{exp}\brak{-\frac{1}{2}\brak{\boldsymbol{z-\mu}}^\top\boldsymbol{\Sigma}^{-1}\brak{\boldsymbol{z-\mu}}}}{\sqrt{(2\pi)^2\abs{\boldsymbol{\Sigma}}}}\\
+f_Z(x,y)=\frac{\text{exp}\brak{-\frac{1}{2}{\begin{pmatrix} x &y\end{pmatrix}} I_2{\begin{pmatrix} x &y\end{pmatrix}}^\top}}{\sqrt{(2\pi)^2}}
 \end{align}
 Where $I_2$ is the identity matrix of order 2
 \begin{align}
-f_Z(x,y)=\frac{\text{exp}\brak{-\frac{1}{2}\brak{\begin{bmatrix} x &y\end{bmatrix}} \brak{\begin{bmatrix} x &y\end{bmatrix}}^\top}}{\sqrt{(2\pi)^2}}\\
+f_Z(x,y)=\frac{\text{exp}\brak{-\frac{1}{2}{\begin{pmatrix} x &y\end{pmatrix}} {\begin{pmatrix} x &y\end{pmatrix}}^\top}}{\sqrt{(2\pi)^2}}\\
 f_Z(x,y)=\frac{\text{exp}\brak{-\frac{1}{2}\brak{x^2+y^2}}}{\sqrt{(2\pi)^2}}=f_X(x)f_Y(y)
 \end{align}
 $\therefore$ \textbf{Option(2) is correct}
+A simulation for bivariate gaussian is given below
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{figure/plot}
+\caption{bivariate gaussian while 0 mean vector and null covariance matrix}
+\label{plot}
+\end{figure}
 \item
 The counter example is \eqref{eq:counter}, the joint probability function is symmetric across all 4 quadrants
 \begin{align}
