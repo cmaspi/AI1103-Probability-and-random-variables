@@ -165,7 +165,7 @@ E\sbrak{XY}=0\\
 \displaystyle \int\limits_{-\infty}^{\infty} \int\limits_{-\infty}^{\infty}xyf_{XY}(x,y) dxdy=0
 \end{align}
 This doesn't imply independence. Counter example given below\\
-Lets consider a case where $X$ and $Y$ are dependent based on the following relation
+Lets consider a case where $X$ and $Y$ are dependent based on the following relation, $Y$ being independent of $K$
 \begin{align}
 X=KY \label{eq:case}
 \end{align}
@@ -185,6 +185,15 @@ A simulation is given below, Y is gaussian, then X also follows gaussian
 \caption{X and Y, if Y is normal}
 \label{plot}
 \end{figure}
+Theoretically it can be proved in the following manner,
+Since $K$ and $Y$ are independent
+\begin{align}
+f_X(x)&=\pr{K=1}f_Y(x)+\pr{K=-1}f_Y(-x)\\
+&=\frac{1}{2}\brak{f_Y(x)+f_Y(-x)}\\
+&=f_Y(x)
+\end{align}
+Therefore, $X$ follows identical but not independent distribution as $Y$, An alternative proof is given below as a proof for marginal probability\\
+Now consider that $X$ is normally distributed, we will establish $Y$ is also normally distributed.
 The joint probability distribution is therefore
 \begin{align}
 f_{XY}(x,y)&=f_{X|Y}(x|y)f_X(x)\nonumber \\
@@ -199,7 +208,16 @@ Using \eqref{eq:dirac}, we get
 \int\limits_{-\infty}^{\infty}f_X(x)\frac{1}{2}(\delta(x+y)+\delta(x-y))dy=f_X(x)
 \end{align}
 We know that $X\sim N(0,1)$, $f_X(x)$ represents gaussian probability distribution function.\\
-Futher, using symmetry of \eqref{eq:case}, we can establish that marginal distribution of $Y$ is gaussian
+Futher, using symmetry of \eqref{eq:case}, we can establish that marginal distribution of $Y$ is gaussian. Here is a proof anyways
+\begin{align}
+f_Y(y)=\int\limits_{-\infty}^{\infty}f_X(x)\frac{1}{2}(\delta(x+y)+\delta(x-y)) dx
+\end{align}
+Using \eqref{eq:dirac}, we get
+\begin{align}
+f_Y(y)=\frac{1}{2}\brak{f_X(y)+f_X(-y)}=f_X(y)
+\end{align}
+Since $Y$ has identical probability distribution function, $Y\sim N(0,1)$\\
+The covariance is given as
 \begin{align}
 &Cov(X,Y)=E[XY]-E[X]E[Y]=E[XY]\\
 &E[XY]=\int\limits_{-\infty}^{\infty}\int\limits_{-\infty}^{\infty}xyf_{XY}(x,y) dy dx
